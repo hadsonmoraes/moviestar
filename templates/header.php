@@ -15,7 +15,7 @@ if (!empty($flassMessage["msg"])) {
 
 $userDao = new UserDAO($conn, $BASE_URL);
 
-$userData = $userDao->verifyToken();
+$userData = $userDao->verifyToken(false);
 
 ?>
 
@@ -39,25 +39,47 @@ $userData = $userDao->verifyToken();
 <body>
   <header>
     <nav id="main-navbar" class="navbar navbar-expand-lg">
-      <a href="<?= $BASE_URL ?>" class="navbar-brand">
-        <img src="<?= $BASE_URL ?>img/logo.svg" alt="MovieStar" id="logo">
-        <span id="moviestar-title">MovieStar</span>
-      </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
-        <i class="fas fa-bars"></i>
-      </button>
-      <form action="" method="get" id="search-form" class="d-flex my-2 my-lg-0">
-        <input type="text" name="q" id="search" class="form-control mr-sm-2" type="search" placeholder="Buscar Filmes" aria-label="Search">
-        <button type="submit" class="btn my-2 my-sm-0">
-          <i class="fas fa-search"></i>
+      <div class="container-fluid">
+        <a href="<?= $BASE_URL ?>" class="navbar-brand">
+          <img src="<?= $BASE_URL ?>img/logo.svg" alt="MovieStar" id="logo">
+          <span id="moviestar-title">MovieStar</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fas fa-bars"></i>
         </button>
-      </form>
-      <div class="collapse navbar-collapse" id="navbar">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a href="<?= $BASE_URL ?>auth.php" class="nav-link">Entrar / Cadastrar</a>
-          </li>
-        </ul>
+        <form action="" method="get" id="search-form" class="d-flex my-2 my-lg-0">
+          <input type="text" name="q" id="search" class="form-control mr-sm-2" type="search" placeholder="Buscar Filmes" aria-label="Search">
+          <button type="submit" class="btn my-2 my-sm-0">
+            <i class="fas fa-search"></i>
+          </button>
+        </form>
+        <div class="collapse navbar-collapse" id="navbar">
+          <ul class="navbar-nav">
+
+            <?php if ($userData) : ?>
+              <li class="nav-item">
+                <a href="<?= $BASE_URL ?>newmovie.php" class="nav-link"><i class="far fa-plus-square"></i>
+                  Incluir Filme
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?= $BASE_URL ?>dashboard.php" class="nav-link">Meus Filmes</a>
+              </li>
+              <li class="nav-item">
+                <a href="<?= $BASE_URL ?>editprofile.php" class="nav-link bold">
+                  <?= $userData->name ?>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?= $BASE_URL ?>logout.php" class="nav-link">Sair</a>
+              </li>
+            <?php else : ?>
+              <li class="nav-item">
+                <a href="<?= $BASE_URL ?>auth.php" class="nav-link">Entrar / Cadastrar</a>
+              </li>
+            <?php endif; ?>
+          </ul>
+        </div>
       </div>
     </nav>
   </header>
