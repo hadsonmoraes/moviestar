@@ -45,7 +45,7 @@
 
 .navbar-nav .nav-item .nav-link {
   color: #fff;
-  transition: .5s;
+  transition: 0.5s;
 }
 
 .navbar-nav .nav-item .nav-link:hover {
@@ -89,7 +89,6 @@
   min-height: 65vh;
   padding: 40px;
 }
-
 
 /* LOGIN / REGISTER */
 
@@ -145,6 +144,17 @@
   max-width: 400px;
 }
 
+.form-control.disabled {
+  background-color: #bbb;
+}
+
+#change-password-container {
+  margin-top: 30px;
+}
+
+.edit-profile-page .card-btn {
+  width: auto;
+}
 
 /*  FOOTER */
 
@@ -172,7 +182,7 @@
   height: 40px;
   width: 40px;
   border-radius: 100%;
-  transition: .5s;
+  transition: 0.5s;
   line-height: 3;
 }
 
@@ -183,7 +193,7 @@
 #social-container a,
 #footer-links-container a {
   color: #fff;
-  transition: .5s;
+  transition: 0.5s;
   text-decoration: none;
 }
 

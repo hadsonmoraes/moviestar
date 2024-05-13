@@ -15,7 +15,7 @@ if ($userData->image == "") {
 
 ?>
 
-<div id="main-container" class="container-fluid">
+<div id="main-container" class="container-fluid edit-profile-page">
   <div class="col-md-12">
     <form action="<?= $BASE_URL ?>user_process.php" method="post" enctype="multipart/form-data">
       <input type="hidden" name="type" value="update">
@@ -37,10 +37,10 @@ if ($userData->image == "") {
             <label for="email" class="form-label">E-mail</label>
             <input type="email" readonly class="form-control disabled" id="email" name="email" placeholder="Digite o seu email" value="<?= $userData->email ?>">
           </div>
-          <input type="submit" class="btn form-btn" value="Alterar">
+          <input type="submit" class="btn card-btn" value="Alterar">
         </div>
         <div class="col-md-4">
-          <div id="profile-image-container" style="background-image url('<?= $BASE_URL ?>img/users/<?= $userData->image ?>')">
+          <div id="profile-image-container" style="background-image: url('<?= $BASE_URL ?>img/users/<?= $userData->image ?>')">
           </div>
           <div class="mb-3">
             <label for="image">Foto:</label>
@@ -61,6 +61,7 @@ if ($userData->image == "") {
         </p>
         <form action="<?= $BASE_URL ?>user_process.php" method="post">
           <input type="hidden" name="type" value="changepassword">
+          <input type="hidden" name="id" value="<?= $userData->id ?>">
           <div class="mb-3">
             <label for="password" class="form-label">Senha</label>
             <input type="password" class="form-control" id="password" name="password" placeholder="Digite a sua nova senha">
@@ -69,7 +70,7 @@ if ($userData->image == "") {
             <label for="confirmpassword" class="form-label">Confirmação de senha</label>
             <input type="password" class="form-control" id="cofirmpassword" name="confirmpassword" placeholder="Digite a sua nova senha">
           </div>
-          <input type="submit" class="btn form-btn" value="Alterar senha">
+          <input type="submit" class="btn card-btn" value="Alterar senha">
         </form>
       </div>
     </div>
