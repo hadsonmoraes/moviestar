@@ -26,7 +26,7 @@ class MovieDAO implements MovieDAOInterface
     $movie->title = $data["title"];
     $movie->description = $data["description"];
     $movie->image = $data["image"];
-    $movie->title = $data["title"];
+    $movie->trailer = $data["trailer"];
     $movie->category = $data["category"];
     $movie->length = $data["length"];
     $movie->users_id = $data["users_id"];
@@ -91,7 +91,7 @@ class MovieDAO implements MovieDAOInterface
       $movieData = $stmt->fetch();
       $movie = $this->buildMovie($movieData);
       return $movie;
-    }else{
+    } else {
       return false;
     }
     return $movie;
@@ -122,5 +122,11 @@ class MovieDAO implements MovieDAOInterface
   }
   public function destroy($id)
   {
+    $stmt = $this->conn->prepare("DELETE FROM movies WHERE id = :id");
+    $stmt->bindParam(":id", $id);
+    $stmt->execute();
+
+    // Mensagem de sucesso por remover filme
+    $this->message->setMessage("Filme removido adicionado com sucesso!", "success", "dashboard.php");
   }
 }
