@@ -1,6 +1,6 @@
-#Projeto MovieEstar
+Projeto MovieEstar
 
-feito no curso php do zero a maestria
+##feito no curso php do zero a maestria
 
 Tecnologia: Php puro , Bootstrap 5.3, Css, html
 
