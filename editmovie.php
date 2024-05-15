@@ -9,41 +9,78 @@ $user = new User();
 $userDao = new UserDao($conn, $BASE_URL);
 $movieDao = new MovieDao($conn, $BASE_URL);
 $userData = $userDao->verifyToken(true);
-$userMovies = $movieDao->getMoviesByUserId($userData->id)
+
+$id = filter_input(INPUT_GET, "id");
+
+if (empty($id)) {
+  $message->setMessage("O filme não foi encontrado!", "error", "index.php");
+} else {
+  $movie = $movieDao->findById($id);
+  // Verifica se o filme existe
+  if (!$movie) {
+    $message->setMessage("O filme não foi encontrado!", "error", "index.php");
+  }
+}
+
+// Checar se o filme tem imagem
+if ($movie->image == "") {
+  $movie->image = "movie_cover.jpg";
+}
+
 ?>
 
 
 <div id="main-container" class="container-fluid">
-  <h2 class="section-title">Filmes novos</h2>
-  <p class="section-description">Veja as críticas dos últimos filmes adicionados</p>
-  <div class="moveis-container">
-    <?php foreach ($latestMovies as $movie) : ?>
-      <?php require("templates/movie_card.php"); ?>
-    <?php endforeach; ?>
-    <?php if (count($latestMovies) === 0) : ?>
-      <p class="empty-list">Ainda não há filmes cadastrados!</p>
-    <?php endif; ?>
-  </div>
-  <h2 class="section-title">Ação</h2>
-  <p class="section-description">Veja os melhores filmes de ação</p>
-  <div class="moveis-container">
-    <?php foreach ($actionMovies as $movie) : ?>
-      <?php require("templates/movie_card.php"); ?>
-    <?php endforeach; ?>
-    <?php if (count($actionMovies) === 0) : ?>
-      <p class="empty-list">Ainda não há filmes de ação cadastrados!</p>
-    <?php endif; ?>
-  </div>
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-6 offset-md-1">
+        <h1><?= $movie->title ?></h1>
+        <p class="page-description">Altere os dados do filme no formulário abaixo:</p>
+        <form action="<?= $BASE_URL ?>movie_process.php" method="post" id="edit-movie-form" enctype="multipart/form-data">
+          <input type="hidden" name="type" value="update">
+          <input type="hidden" name="id" value="<?= $movie->id ?>">
+          <div class="mb-3">
+            <label for="title" class="form-label">Título:</label>
+            <input type="text" class="form-control" id="title" name="title" placeholder="Digite o título do seu filme" value="<?= $movie->title ?>">
+          </div>
+          <div class="mb-3">
+            <label for="image" class="form-label">Image:</label>
+            <input class="form-control" type="file" id="image" name="image">
+          </div>
+          <div class="mb-3">
+            <label for="length" class="form-label">Duração:</label>
+            <input type="text" class="form-control" id="length" name="length" placeholder="Digite a duração do filme" value="<?= $movie->length ?>">
+          </div>
+          <div class="mb-3">
+            <label for="category" class="form-label">Categoria:</label>
+            <select name="category" id="category" class="form-control">
+              <option value="">selecione</option>
+              <option value="Ação" <?= $movie->category === "Ação" ? "selected" : "" ?>>Ação</option>
+              <option value="Drama" <?= $movie->category === "Drama" ? "selected" : "" ?>>Drama</option>
+              <option value="Comédia" <?= $movie->category === "Comédia" ? "selected" : "" ?>>Comédia</option>
+              <option value="Fantasia/ficção" <?= $movie->category === "Fantasia/ficção" ? "selected" : "" ?>>Fantasia/ficção</option>
+              <option value="Romance" <?= $movie->category === "Romance" ? "selected" : "" ?>>Romance</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="trailer" class="form-label">Trailer:</label>
+            <input type="text" class="form-control" id="trailer" name="trailer" placeholder="Insira o link do trailer" value="<?= $movie->trailer ?>">
+          </div>
+          <div class="mb-3">
+            <label for="description" class="form-label">Descrição:</label>
+            <textarea name="description" id="description" rows="5" class="form-control" placeholder="Descreva o filme...">
+            <?= $movie->description ?>
+          </textarea>
+          </div>
+          <input type="submit" class="btn card-btn" value="Editar filme">
+        </form>
+      </div>
+      <div class="col-md-3">
+        <div class="movie-image-container" style="background-image: url('<?= $BASE_URL ?>img/movies/<?= $movie->image ?>')">
 
-  <h2 class="section-title">Comédia</h2>
-  <p class="section-description">Veja os melhores filmes de comédia</p>
-  <div class="moveis-container">
-    <?php foreach ($comedyMovies as $movie) : ?>
-      <?php require("templates/movie_card.php"); ?>
-    <?php endforeach; ?>
-    <?php if (count($comedyMovies) === 0) : ?>
-      <p class="empty-list">Ainda não há filmes de comédia cadastrados!</p>
-    <?php endif; ?>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 

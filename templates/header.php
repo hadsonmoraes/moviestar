@@ -44,10 +44,10 @@ $userData = $userDao->verifyToken(false);
           <img src="<?= $BASE_URL ?>img/logo.svg" alt="MovieStar" id="logo">
           <span id="moviestar-title">MovieStar</span>
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
           <i class="fas fa-bars"></i>
         </button>
-        <form action="" method="get" id="search-form" class="d-flex my-2 my-lg-0">
+        <form action="<?= $BASE_URL ?>search.php" method="get" id="search-form" class="d-flex my-2 my-lg-0">
           <input type="text" name="q" id="search" class="form-control mr-sm-2" type="search" placeholder="Buscar Filmes" aria-label="Search">
           <button type="submit" class="btn my-2 my-sm-0">
             <i class="fas fa-search"></i>
